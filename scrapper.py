@@ -1,7 +1,9 @@
+from re import S
 import time
 import os
 import pyautogui # use this for making images look good 
 import sys
+import csv
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
@@ -15,15 +17,19 @@ from selenium.webdriver.chrome.options import Options
 
 chromedriverPath = "C:\Program Files (x86)\chromedriver.exe" #for Windows
 
-intendedsearch = input("What do you want to search?")
+
 
 #driver = webdriver.Chrome(chromedriverPath, options=chrome_options)#headless version
-driver = webdriver.Chrome(chromedriverPath)
-action = ActionChains(driver)
 
 
+
+def scrapper_Main():
+    intendedsearch = input("What do you want to search?")
+    search(intendedsearch)
 
 def loadWebPage():
+    global driver
+    driver = webdriver.Chrome(chromedriverPath)
     driver.get("https://www.google.com/")
     driver.maximize_window()
     time.sleep(2)
@@ -95,21 +101,17 @@ def cropImages(intendedsearch, i): # no worky
         new_Image.save(r'C:\Users\Jack Ryan\Desktop\Coding\Python\webScrapper\scrappedImages\\'+intendedsearch+'\\'+intendedsearch+' (' +str(i)+ ').png')
         
 def again(): 
+    driver.close()
     answer = input("Would you like to collect more Images with a different search? (y/n)")
 
     if answer == "y":
-        intendedsearch = input("What do you want to search?")
-        search(intendedsearch)
-
+        scrapper_Main()
     elif answer == "n":
         sys.exit("Thanks for running!!!")
-
     else:
         print("Please only enter 'y' or 'n' " )
         again()
-        
 
 
-        
-search(intendedsearch)
+
 print("done")
