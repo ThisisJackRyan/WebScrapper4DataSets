@@ -1,13 +1,19 @@
 import csv
 import os 
-import scrappedImages
+from PIL import Image
 
 
 
 def pixel_Conversion_Main():
-    print("Main() -- Worked!")
-    #for pic in scrappedImages:
-    #worried that having them seperated in folder will anger the coding gods
+    folderNames = os.listdir(r"C:\Users\Jack Ryan\Desktop\Coding\Python\webScrapper\scrappedImages")
+    print(folderNames)
+    for i in folderNames:
+        parentFolder = os.listdir(r"C:\Users\Jack Ryan\Desktop\Coding\Python\webScrapper\scrappedImages\\"+i)
+        print("Parent Folder: " + i)
+        for j in parentFolder:
+            image = Image.open(r"C:\Users\Jack Ryan\Desktop\Coding\Python\webScrapper\scrappedImages\\"+i +"\\" + j)
+            pixelConversion(image)
+        
 
 def pixelConversion(image):
     pixel_values = (image.getdata())
@@ -15,8 +21,7 @@ def pixelConversion(image):
             writer = csv.writer(f)
             writer.writerow(pixel_values)
 
-def find_intendedsearch():
-    print("Still Working on")
+
 
 
 
